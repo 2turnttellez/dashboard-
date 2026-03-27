@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { format } from 'date-fns'
 import type { Content } from '@/lib/types'
+import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -84,18 +85,71 @@ export function AddPostDialog({
   
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const handleMediaUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Efecto para cargar valores cuando se abre el diálogo para editar
+  useEffect(() => {
+    if (open && editPost) {
+      setTitle(editPost.title)
+      setCaption(editPost.caption)
+      setPostType(editPost.post_type)
+      setStatus(editPost.status)
+      setPlatform(editPost.platform)
+      setScheduledDate(editPost.scheduled_date)
+      setMediaUrl(editPost.media_url || '')
+      setMediaType(editPost.media_type)
+      setThumbnailUrl(editPost.thumbnail_url || '')
+    } else if (!open) {
+      // Resetear cuando se cierra el diálogo
+      resetForm()
+    }
+  }, [open, editPost])
+
+  const handleMediaUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file) {
-      const url = URL.createObjectURL(file)
-      setMediaUrl(url)
-      
+    
+    if (!file) {
+      console.log('No file selected')
+      return
+    }
+
+    console.log('📤 Upload triggered:', file.name)
+
+    try {
+      const timestamp = Date.now()
+      const randomStr = Math.random().toString(36).substring(2, 10)
+      const extension = file.name.split('.').pop()
+      const fileName = `${timestamp}-${randomStr}.${extension}`
+
+      console.log('🚀 about to upload to supabase')
+
+      const { error } = await supabase.storage
+        .from('media')
+        .upload(fileName, file)
+
+      console.log('📦 upload result:', error)
+
+      if (error) {
+        console.error('❌ Upload error:', error)
+        return
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from('media')
+        .getPublicUrl(fileName)
+
+      const publicUrl = publicUrlData.publicUrl
+      console.log('🔗 Public URL:', publicUrl)
+
+      setMediaUrl(publicUrl)
+
       if (file.type.startsWith('video/')) {
         setMediaType('video')
+        setThumbnailUrl('')
       } else {
         setMediaType('image')
-        setThumbnailUrl(url) // Default thumbnail is the image itself
+        setThumbnailUrl(publicUrl)
       }
+    } catch (error) {
+      console.error('❌ Upload exception:', error)
     }
   }
 

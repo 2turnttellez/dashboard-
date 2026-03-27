@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { format, subDays } from 'date-fns'
+import { es } from 'date-fns/locale'
 import {
   Area,
   AreaChart,
@@ -166,14 +167,14 @@ export function AnalyticsDashboard() {
                   {dateRange?.from ? (
                     dateRange.to ? (
                       <>
-                        {format(dateRange.from, 'LLL dd')} -{' '}
-                        {format(dateRange.to, 'LLL dd, y')}
+                        {format(dateRange.from, 'LLL dd', { locale: es })} -{' '}
+                        {format(dateRange.to, 'LLL dd, y', { locale: es })}
                       </>
                     ) : (
-                      format(dateRange.from, 'LLL dd, y')
+                      format(dateRange.from, 'LLL dd, y', { locale: es })
                     )
                   ) : (
-                    <span>Pick a date</span>
+                    <span>Selecciona fecha</span>
                   )}
                 </Button>
               </PopoverTrigger>
@@ -287,7 +288,7 @@ export function AnalyticsDashboard() {
                     dataKey="date"
                     tickLine={false}
                     axisLine={false}
-                    tickFormatter={(value) => format(new Date(value), 'MMM d')}
+                    tickFormatter={(value) => format(new Date(value), 'MMM d', { locale: es })}
                     tick={{ fill: 'currentColor', fontSize: 12, opacity: 0.7 }}
                   />
                   <YAxis
@@ -326,7 +327,7 @@ export function AnalyticsDashboard() {
                     dataKey="date"
                     tickLine={false}
                     axisLine={false}
-                    tickFormatter={(value) => format(new Date(value), 'MMM d')}
+                    tickFormatter={(value) => format(new Date(value), 'MMM d', { locale: es })}
                     tick={{ fill: 'currentColor', fontSize: 12, opacity: 0.7 }}
                   />
                   <YAxis
@@ -369,7 +370,7 @@ export function AnalyticsDashboard() {
                     dataKey="date"
                     tickLine={false}
                     axisLine={false}
-                    tickFormatter={(value) => format(new Date(value), 'MMM d')}
+                    tickFormatter={(value) => format(new Date(value), 'MMM d', { locale: es })}
                     tick={{ fill: 'currentColor', fontSize: 12, opacity: 0.7 }}
                   />
                   <YAxis
@@ -411,8 +412,8 @@ export function AnalyticsDashboard() {
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm font-medium text-foreground">{post.title}</p>
                       <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
-                        <span>{post.impressions.toLocaleString()} views</span>
-                        <span>{post.engagement}% engagement</span>
+                        <span>{post.impressions.toLocaleString()} vistas</span>
+                        <span>{post.engagement}% interacción</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">

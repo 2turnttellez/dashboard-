@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { useSearchParams } from 'next/navigation'
 import type { Content } from '@/lib/types'
 import { mockContentAnalytics } from '@/lib/data'
 import { supabase } from '@/lib/supabase'
@@ -50,12 +51,25 @@ function mapUiStatusToDb(status: PostStatus): string {
 }
 
 function mapDbPostToContent(p: any): Content {
+  const postTypeMap: Record<string, PostType> = {
+    'post': 'Post',
+    'reel': 'Reel',
+    'story': 'Story',
+    'carousel': 'Carousel',
+  }
+
   return {
     content_id: p.id,
     account_id: 'acc_ig',
     title: p.title || '',
     caption: p.description || '',
+    post_type: postTypeMap[p.type?.toLowerCase()] || 'Post',
+    platform: p.platform || 'Instagram',
     status: mapDbStatusToUi(p.status),
+    scheduled_date: p.scheduled_date ? new Date(p.scheduled_date) : undefined,
+    media_url: p.media_url || undefined,
+    media_type: p.media_type || 'image',
+    thumbnail_url: p.thumbnail_url || undefined,
     created_at: p.created_at ? new Date(p.created_at) : new Date(),
     updated_at: p.created_at ? new Date(p.created_at) : new Date(),
   }
@@ -68,6 +82,33 @@ export function ContentDashboard() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingPost, setEditingPost] = useState<Content | null>(null)
   const [loading, setLoading] = useState(true)
+  
+  const searchParams = useSearchParams()
+  const cardRefs = useRef<Record<string, HTMLDivElement>>({})
+
+  // Scroll y highlight cuando postId viene del query param
+  useEffect(() => {
+    const highlightedPostId = searchParams?.get('postId')
+    
+    if (highlightedPostId && cardRefs.current[highlightedPostId]) {
+      const cardElement = cardRefs.current[highlightedPostId]
+      
+      // Scroll suave hacia la card
+      setTimeout(() => {
+        cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        
+        // Agregar highlight temporal
+        cardElement.classList.add('ring-2', 'ring-[#926c15]', 'shadow-lg')
+        
+        // Remover highlight después de 3 segundos
+        const timer = setTimeout(() => {
+          cardElement.classList.remove('ring-2', 'ring-[#926c15]', 'shadow-lg')
+        }, 3000)
+
+        return () => clearTimeout(timer)
+      }, 100)
+    }
+  }, [searchParams])
 
   const fetchPosts = async () => {
     setLoading(true)
@@ -112,6 +153,12 @@ export function ContentDashboard() {
           title: postData.title,
           description: postData.caption,
           status: mapUiStatusToDb(postData.status),
+          type: postData.post_type?.toLowerCase(),
+          platform: postData.platform,
+          scheduled_date: postData.scheduled_date
+            ? new Date(postData.scheduled_date).toISOString()
+            : null,
+          media_url: postData.media_url,
         })
         .eq('id', editingPost.content_id)
 
@@ -130,7 +177,12 @@ export function ContentDashboard() {
       title: postData.title,
       description: postData.caption,
       status: mapUiStatusToDb(postData.status),
-      type: 'post',
+      type: postData.post_type?.toLowerCase(),
+      platform: postData.platform,
+      scheduled_date: postData.scheduled_date
+        ? new Date(postData.scheduled_date).toISOString()
+        : null,
+      media_url: postData.media_url,
     })
 
     if (error) {
@@ -148,14 +200,58 @@ export function ContentDashboard() {
   }
 
   const handleDeletePost = async (id: string) => {
-    const { error } = await supabase.from('posts').delete().eq('id', id)
+    try {
+      // Obtener el post para conseguir la media_url
+      const { data: postData, error: fetchError } = await supabase
+        .from('posts')
+        .select('media_url')
+        .eq('id', id)
+        .single()
 
-    if (error) {
-      console.error('Error deleting post:', error)
-      return
+      if (fetchError) {
+        console.error('Error fetching post:', fetchError)
+        return
+      }
+
+      // Si existe media_url, borrar el archivo del storage
+      if (postData?.media_url) {
+        try {
+          // Extraer el nombre del archivo de la URL
+          const filePath = postData.media_url.split('/').pop()
+          
+          if (filePath) {
+            console.log('🗑️ Deleting file from storage:', filePath)
+            
+            const { error: storageError } = await supabase.storage
+              .from('media')
+              .remove([filePath])
+
+            if (storageError) {
+              console.error('⚠️ Error deleting file from storage:', storageError)
+              // Continuar con la eliminación del post aunque falle el storage
+            } else {
+              console.log('✅ File deleted from storage')
+            }
+          }
+        } catch (storageException) {
+          console.error('⚠️ Storage cleanup exception:', storageException)
+          // Continuar con la eliminación del post
+        }
+      }
+
+      // Borrar la fila de posts
+      const { error: deleteError } = await supabase.from('posts').delete().eq('id', id)
+
+      if (deleteError) {
+        console.error('Error deleting post:', deleteError)
+        return
+      }
+
+      console.log('✅ Post deleted from database')
+      await fetchPosts()
+    } catch (error) {
+      console.error('Error in handleDeletePost:', error)
     }
-
-    await fetchPosts()
   }
 
   const getStatusCount = (status: PostStatus | 'all') => {
@@ -235,13 +331,19 @@ export function ContentDashboard() {
             ) : (
               <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {filteredPosts.map((post) => (
-                  <PostCard
+                  <div
                     key={post.content_id}
-                    post={post}
-                    analytics={mockContentAnalytics[post.content_id]}
-                    onEdit={() => handleEditPost(post)}
-                    onDelete={() => handleDeletePost(post.content_id)}
-                  />
+                    ref={(el) => {
+                      if (el) cardRefs.current[post.content_id] = el
+                    }}
+                  >
+                    <PostCard
+                      post={post}
+                      analytics={mockContentAnalytics[post.content_id]}
+                      onEdit={() => handleEditPost(post)}
+                      onDelete={() => handleDeletePost(post.content_id)}
+                    />
+                  </div>
                 ))}
               </div>
             )}
@@ -256,7 +358,7 @@ export function ContentDashboard() {
           if (!open) setEditingPost(null)
         }}
         onSave={handleAddPost}
-        post={editingPost}
+        editPost={editingPost}
       />
     </div>
   )
