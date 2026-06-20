@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Speak ESG — Story 1 Preview Frame
+  1080 × 1920 (Instagram Story 9:16)
+  Frame: todos los elementos visibles (sin animación)
+  Abrí este archivo directamente en Safari para verlo en iPhone.
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1080 1920"
+  width="1080"
+  height="1920"
+>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9,700&amp;family=Inter:ital,wght@0,400;0,700;0,800;1,800&amp;family=Space+Mono:wght@400;700&amp;display=swap');
+      .f-serif { font-family: 'Fraunces', Georgia, 'Times New Roman', serif; }
+      .f-sans  { font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif; }
+      .f-mono  { font-family: 'Space Mono', 'SF Mono', Menlo, 'Courier New', monospace; }
+    </style>
+
+    <!-- Sombra del ticket -->
+    <filter id="ticketShadow" x="-8%" y="-12%" width="116%" height="136%">
+      <feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#1A1813" flood-opacity="0.15"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#1A1813" flood-opacity="0.06"/>
+    </filter>
+
+    <!-- Glow del punto EN JUEGO -->
+    <filter id="dotGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Clip para stripe azul del ticket (respeta bordes redondeados) -->
+    <clipPath id="ticketClip">
+      <rect x="80" y="1330" width="920" height="252" rx="30" ry="30"/>
+    </clipPath>
+  </defs>
+
+  <!-- ═══════════════════════════════════════════
+       FONDO
+  ═══════════════════════════════════════════ -->
+  <rect width="1080" height="1920" fill="#F0E9DB"/>
+
+  <!-- ═══════════════════════════════════════════
+       HEADER — logo izq · MUNDIAL 2026 der
+       top: 250px (SAFE.top), lados: 80px
+  ═══════════════════════════════════════════ -->
+
+  <!-- "SPEAK" — Inter italic 800 azul -->
+  <text
+    x="80" y="284"
+    class="f-sans"
+    font-size="34" font-weight="800" font-style="italic"
+    fill="#2F4EE8"
+    letter-spacing="-0.3"
+  >SPEAK</text>
+
+  <!-- Pill "PODCAST" naranja -->
+  <rect x="208" y="258" width="90" height="27" rx="12" ry="12" fill="#E8842A"/>
+  <text
+    x="253" y="278"
+    class="f-sans"
+    font-size="13" font-weight="700"
+    fill="#FFFFFF"
+    text-anchor="middle"
+    letter-spacing="0.9"
+  >PODCAST</text>
+
+  <!-- "ESG" — Inter 800 azul -->
+  <text
+    x="310" y="284"
+    class="f-sans"
+    font-size="34" font-weight="800"
+    fill="#2F4EE8"
+    letter-spacing="-0.3"
+  >ESG</text>
+
+  <!-- "MUNDIAL 2026" — Space Mono gris cálido -->
+  <text
+    x="1000" y="274"
+    class="f-mono"
+    font-size="22" font-weight="400"
+    fill="#7C786E"
+    text-anchor="end"
+    letter-spacing="4"
+  >MUNDIAL 2026</text>
+
+
+  <!-- ═══════════════════════════════════════════
+       ZONA DE TEXTO EDITORIAL
+       top: 340px, lados: 80px
+  ═══════════════════════════════════════════ -->
+
+  <!-- Eyebrow / label -->
+  <text
+    x="80" y="362"
+    class="f-mono"
+    font-size="24" font-weight="400"
+    fill="#2742DD"
+    letter-spacing="5"
+  >DÍA DE PARTIDO</text>
+
+  <!-- Titular línea 1: "Hoy hay" — Fraunces 700 152px -->
+  <text
+    x="78" y="522"
+    class="f-serif"
+    font-size="152" font-weight="700"
+    fill="#1A1813"
+    letter-spacing="-4"
+  >Hoy hay</text>
+
+  <!-- Titular línea 2: "fútbol." — punto en azul -->
+  <text
+    x="78" y="659"
+    class="f-serif"
+    font-size="152" font-weight="700"
+    letter-spacing="-4"
+  >
+    <tspan fill="#1A1813">fútbol</tspan><tspan fill="#2742DD">.</tspan>
+  </text>
+
+  <!-- Subtítulo — Inter mix peso 400 / 700 -->
+  <text
+    x="80" y="764"
+    class="f-sans"
+    font-size="38" font-weight="400"
+    fill="#3A372F"
+  >Pero también hay <tspan font-weight="700">algo más en juego.</tspan></text>
+
+
+  <!-- ═══════════════════════════════════════════
+       TICKET — Apple Wallet / pase digital
+       bottom: 340px del canvas (SAFE.bottom + 20)
+       Ticket top: y = 1920 - 340 - 252 = 1328 ≈ 1330
+  ═══════════════════════════════════════════ -->
+
+  <!-- Card shadow + fondo crema -->
+  <rect
+    x="80" y="1330" width="920" height="252" rx="30" ry="30"
+    fill="#F7F2E8"
+    filter="url(#ticketShadow)"
+  />
+
+  <!-- Borde sutil -->
+  <rect
+    x="80" y="1330" width="920" height="252" rx="30" ry="30"
+    fill="none"
+    stroke="rgba(26,24,19,0.07)"
+    stroke-width="1"
+  />
+
+  <!-- Franja azul superior (identity stripe) — clipeada a bordes del ticket -->
+  <rect
+    x="80" y="1330" width="920" height="8"
+    fill="#2742DD"
+    clip-path="url(#ticketClip)"
+  />
+
+  <!-- Fila mono superior -->
+  <text
+    x="128" y="1393"
+    class="f-mono"
+    font-size="19" font-weight="400"
+    fill="#7C786E"
+    letter-spacing="2"
+  >MATCHDAY · MEX 2026</text>
+
+  <text
+    x="952" y="1393"
+    class="f-mono"
+    font-size="19" font-weight="400"
+    fill="#7C786E"
+    letter-spacing="2"
+    text-anchor="end"
+  >ACCESO GENERAL</text>
+
+  <!-- Divisor perforado -->
+  <line
+    x1="128" y1="1417" x2="952" y2="1417"
+    stroke="#1A1813" stroke-opacity="0.15"
+    stroke-width="2"
+    stroke-dasharray="9,6"
+  />
+
+  <!-- "MEX · Sede 01" — Fraunces 700 56px -->
+  <text
+    x="128" y="1487"
+    class="f-serif"
+    font-size="56" font-weight="700"
+    fill="#1A1813"
+    letter-spacing="-0.5"
+  >MEX · Sede 01</text>
+
+  <!-- Punto "EN JUEGO" con glow -->
+  <circle cx="138" cy="1520" r="7" fill="#2742DD" filter="url(#dotGlow)"/>
+
+  <!-- "EN JUEGO" label -->
+  <text
+    x="156" y="1527"
+    class="f-mono"
+    font-size="19" font-weight="400"
+    fill="#2742DD"
+    letter-spacing="2"
+  >EN JUEGO</text>
+
+  <!-- "90:00" — tiempo en grande -->
+  <text
+    x="952" y="1525"
+    class="f-mono"
+    font-size="68" font-weight="700"
+    fill="#2742DD"
+    text-anchor="end"
+    letter-spacing="1"
+  >90:00</text>
+
+  <!-- Notches (semicírculos perforación) -->
+  <circle cx="80"  cy="1456" r="19" fill="#F0E9DB"/>
+  <circle cx="1000" cy="1456" r="19" fill="#F0E9DB"/>
+
+</svg>
