@@ -3,41 +3,36 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { COLORS } from "../lib/theme";
 import { FONTS } from "../lib/fonts";
 
-/**
- * Pase digital tipo Apple Wallet (Story 1).
- * Entrada: slide-up desde abajo + settle elástico (spring).
- * El punto "EN JUEGO" late en loop sutil; el ":" del 90:00 parpadea suave.
- */
 export const Ticket: React.FC<{ delay?: number }> = ({ delay = 0 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Slide-up + settle.
+  // Slide-up + settle elástico.
   const enter = spring({
     frame: frame - delay,
     fps,
     config: { damping: 16, mass: 0.9, stiffness: 110 },
     durationInFrames: 45,
   });
-  const translateY = interpolate(enter, [0, 1], [240, 0]);
+  const translateY = interpolate(enter, [0, 1], [260, 0]);
   const opacity = interpolate(frame - delay, [0, 10], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  // Micro-motion del estado en vivo.
-  const pulse = 0.55 + 0.45 * Math.sin((frame / fps) * Math.PI * 2 * 1.1);
-  const colonOn = Math.sin((frame / fps) * Math.PI * 2) > -0.3 ? 1 : 0.25;
+  // Micro-motion EN JUEGO + colon.
+  const pulse = 0.5 + 0.5 * Math.sin((frame / fps) * Math.PI * 2 * 1.1);
+  const colonOn = Math.sin((frame / fps) * Math.PI * 2) > -0.3 ? 1 : 0.2;
 
   const notch = (side: "left" | "right") => (
     <div
       style={{
         position: "absolute",
         top: "50%",
-        [side]: -18,
-        width: 36,
-        height: 36,
-        borderRadius: 18,
+        [side]: -20,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
         backgroundColor: COLORS.cream,
         transform: "translateY(-50%)",
       }}
@@ -50,19 +45,22 @@ export const Ticket: React.FC<{ delay?: number }> = ({ delay = 0 }) => {
         position: "relative",
         transform: `translateY(${translateY}px)`,
         opacity,
-        borderRadius: 30,
+        borderRadius: 32,
         backgroundColor: COLORS.creamCard,
-        boxShadow:
-          "0 24px 60px rgba(26,24,19,0.16), 0 2px 0 rgba(255,255,255,0.6) inset",
-        border: `1px solid rgba(26,24,19,0.08)`,
+        boxShadow: [
+          "0 32px 72px rgba(26,24,19,0.14)",
+          "0 8px 20px rgba(26,24,19,0.07)",
+          "0 2px 0 rgba(255,255,255,0.72) inset",
+        ].join(", "),
+        border: "1px solid rgba(26,24,19,0.06)",
         overflow: "hidden",
       }}
     >
-      {/* Franja superior de color (acento pase digital) */}
-      <div style={{ height: 8, backgroundColor: COLORS.blue, width: "100%" }} />
+      {/* Stripe azul (identidad del pase) */}
+      <div style={{ height: 10, backgroundColor: COLORS.blue, width: "100%" }} />
 
-      <div style={{ padding: "34px 40px 38px" }}>
-        {/* Cabecera mono */}
+      <div style={{ padding: "44px 48px 48px" }}>
+        {/* Fila mono superior */}
         <div
           style={{
             display: "flex",
@@ -80,26 +78,28 @@ export const Ticket: React.FC<{ delay?: number }> = ({ delay = 0 }) => {
         {/* Divisor perforado */}
         <div
           style={{
-            marginTop: 22,
-            marginBottom: 26,
-            borderTop: `2px dashed rgba(26,24,19,0.18)`,
+            marginTop: 24,
+            marginBottom: 28,
+            borderTop: "2px dashed rgba(26,24,19,0.14)",
           }}
         />
 
-        {/* Fila principal */}
+        {/* Fila principal: sede + tiempo */}
         <div
           style={{
             display: "flex",
             alignItems: "flex-end",
             justifyContent: "space-between",
+            gap: 16,
           }}
         >
+          {/* Columna izquierda */}
           <div>
             <div
               style={{
                 fontFamily: FONTS.serif,
-                fontSize: 56,
-                fontWeight: 600,
+                fontSize: 58,
+                fontWeight: 700,
                 color: COLORS.ink,
                 lineHeight: 1.0,
                 letterSpacing: "-0.01em",
@@ -109,12 +109,12 @@ export const Ticket: React.FC<{ delay?: number }> = ({ delay = 0 }) => {
             </div>
             <div
               style={{
-                marginTop: 16,
+                marginTop: 18,
                 display: "flex",
                 alignItems: "center",
                 gap: 10,
                 fontFamily: FONTS.mono,
-                fontSize: 19,
+                fontSize: 20,
                 letterSpacing: "0.1em",
                 color: COLORS.blue,
               }}
@@ -126,21 +126,24 @@ export const Ticket: React.FC<{ delay?: number }> = ({ delay = 0 }) => {
                   borderRadius: 6,
                   backgroundColor: COLORS.blue,
                   opacity: pulse,
-                  boxShadow: `0 0 ${10 * pulse}px ${COLORS.blue}`,
+                  boxShadow: `0 0 ${12 * pulse}px ${COLORS.blue}88`,
+                  flexShrink: 0,
                 }}
               />
               EN JUEGO
             </div>
           </div>
 
+          {/* Columna derecha: tiempo */}
           <div
             style={{
               fontFamily: FONTS.mono,
-              fontSize: 64,
+              fontSize: 72,
               fontWeight: 700,
               color: COLORS.blue,
-              letterSpacing: "0.02em",
+              letterSpacing: "0.01em",
               lineHeight: 1,
+              flexShrink: 0,
             }}
           >
             90<span style={{ opacity: colonOn }}>:</span>00

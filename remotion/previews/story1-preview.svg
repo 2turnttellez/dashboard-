@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Speak ESG — Story 1 Preview Frame
-  1080 × 1920 (Instagram Story 9:16)
-  Frame: todos los elementos visibles (sin animación)
-  Abrí este archivo directamente en Safari para verlo en iPhone.
+  Speak ESG — Story 1 Preview (v2)
+  1080 × 1920 · Instagram Story 9:16
+  Ticket: subido +60px, más alto, sombra refinada, stripe 10px, notches r=20
+  Logo: archivo real con mix-blend-mode multiply (workaround fondo blanco PNG)
+  Abrir en Safari / Chrome para ver fuentes Google Fonts cargadas.
 -->
 <svg
   xmlns="http://www.w3.org/2000/svg"
@@ -13,193 +14,179 @@
 >
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9,700&amp;family=Inter:ital,wght@0,400;0,700;0,800;1,800&amp;family=Space+Mono:wght@400;700&amp;display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9,700&amp;family=Inter:ital,wght@0,400;0,700;1,400&amp;family=Space+Mono:wght@400;700&amp;display=swap');
       .f-serif { font-family: 'Fraunces', Georgia, 'Times New Roman', serif; }
       .f-sans  { font-family: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif; }
       .f-mono  { font-family: 'Space Mono', 'SF Mono', Menlo, 'Courier New', monospace; }
     </style>
 
-    <!-- Sombra del ticket -->
-    <filter id="ticketShadow" x="-8%" y="-12%" width="116%" height="136%">
-      <feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#1A1813" flood-opacity="0.15"/>
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#1A1813" flood-opacity="0.06"/>
+    <!--
+      Sombra multicapa del ticket:
+      capa 1 — ambient shadow suave y amplio
+      capa 2 — contact shadow corto y más oscuro
+    -->
+    <filter id="ticketShadow" x="-10%" y="-14%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="28" stdDeviation="32" flood-color="#1A1813" flood-opacity="0.12"/>
+      <feDropShadow dx="0" dy="6"  stdDeviation="8"  flood-color="#1A1813" flood-opacity="0.06"/>
     </filter>
 
-    <!-- Glow del punto EN JUEGO -->
-    <filter id="dotGlow" x="-100%" y="-100%" width="300%" height="300%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+    <!-- Glow del dot EN JUEGO -->
+    <filter id="dotGlow" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
 
-    <!-- Clip para stripe azul del ticket (respeta bordes redondeados) -->
+    <!-- Clip del ticket (para stripe azul con bordes redondeados) -->
+    <!-- Ticket: y=1210, height=292 → bottom y=1502 -->
     <clipPath id="ticketClip">
-      <rect x="80" y="1330" width="920" height="252" rx="30" ry="30"/>
+      <rect x="80" y="1210" width="920" height="292" rx="32" ry="32"/>
     </clipPath>
   </defs>
 
-  <!-- ═══════════════════════════════════════════
-       FONDO
-  ═══════════════════════════════════════════ -->
+  <!-- ══════════════════════════════════════════════════
+       FONDO — crema editorial
+  ══════════════════════════════════════════════════ -->
   <rect width="1080" height="1920" fill="#F0E9DB"/>
 
-  <!-- ═══════════════════════════════════════════
-       HEADER — logo izq · MUNDIAL 2026 der
-       top: 250px (SAFE.top), lados: 80px
-  ═══════════════════════════════════════════ -->
+
+  <!-- ══════════════════════════════════════════════════
+       HEADER
+       top: 250px (SAFE.top) · lados: 80px
+       Logo real PNG + MUNDIAL 2026
+  ══════════════════════════════════════════════════ -->
 
   <!--
-    LOGO: se usa el archivo original. El PNG tiene fondo blanco/gris (no transparente).
-    mix-blend-mode="multiply" integra el fondo blanco con el crema como workaround.
+    Logo Speak ESG Podcast — archivo original logo-speak-esg.png.
+    mix-blend-mode multiply: funde el fondo blanco/gris del PNG sobre el crema.
     Para render final se necesita PNG con canal alpha (fondo transparente).
     Ruta relativa desde este SVG: ../src/assets/logo-speak-esg.png
+    Si la ruta no resuelve en GitHub Raw, el logo no aparecerá (ver HTML preview).
   -->
   <image
     href="../src/assets/logo-speak-esg.png"
-    x="58" y="230"
-    height="110"
+    x="54" y="228"
+    height="112"
+    preserveAspectRatio="xMinYMid meet"
     style="mix-blend-mode: multiply;"
   />
 
-  <!-- "MUNDIAL 2026" — Space Mono gris cálido -->
+  <!-- MUNDIAL 2026 -->
   <text
-    x="1000" y="274"
+    x="1000" y="276"
     class="f-mono"
-    font-size="22" font-weight="400"
+    font-size="22"
     fill="#7C786E"
     text-anchor="end"
     letter-spacing="4"
   >MUNDIAL 2026</text>
 
 
-  <!-- ═══════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════════
        ZONA DE TEXTO EDITORIAL
-       top: 340px, lados: 80px
-  ═══════════════════════════════════════════ -->
+       top: 340px · lados: 80px
+  ══════════════════════════════════════════════════ -->
 
-  <!-- Eyebrow / label -->
-  <text
-    x="80" y="362"
-    class="f-mono"
-    font-size="24" font-weight="400"
-    fill="#2742DD"
-    letter-spacing="5"
-  >DÍA DE PARTIDO</text>
+  <!-- Eyebrow -->
+  <text x="80" y="364" class="f-mono" font-size="24" fill="#2742DD" letter-spacing="5.3">DÍA DE PARTIDO</text>
 
-  <!-- Titular línea 1: "Hoy hay" — Fraunces 700 152px -->
-  <text
-    x="78" y="522"
-    class="f-serif"
-    font-size="152" font-weight="700"
-    fill="#1A1813"
-    letter-spacing="-4"
-  >Hoy hay</text>
+  <!-- Titular L1: Hoy hay -->
+  <text x="78" y="524" class="f-serif" font-size="152" font-weight="700" fill="#1A1813" letter-spacing="-4">Hoy hay</text>
 
-  <!-- Titular línea 2: "fútbol." — punto en azul -->
-  <text
-    x="78" y="659"
-    class="f-serif"
-    font-size="152" font-weight="700"
-    letter-spacing="-4"
-  >
+  <!-- Titular L2: fútbol. — punto azul -->
+  <text x="78" y="661" class="f-serif" font-size="152" font-weight="700" letter-spacing="-4">
     <tspan fill="#1A1813">fútbol</tspan><tspan fill="#2742DD">.</tspan>
   </text>
 
-  <!-- Subtítulo — Inter mix peso 400 / 700 -->
-  <text
-    x="80" y="764"
-    class="f-sans"
-    font-size="38" font-weight="400"
-    fill="#3A372F"
-  >Pero también hay <tspan font-weight="700">algo más en juego.</tspan></text>
+  <!-- Subtítulo -->
+  <text x="80" y="764" class="f-sans" font-size="38" fill="#3A372F" font-weight="400">
+    Pero también hay <tspan font-weight="700">algo más en juego.</tspan>
+  </text>
 
 
-  <!-- ═══════════════════════════════════════════
+  <!-- ══════════════════════════════════════════════════
        TICKET — Apple Wallet / pase digital
-       bottom: 340px del canvas (SAFE.bottom + 20)
-       Ticket top: y = 1920 - 340 - 252 = 1328 ≈ 1330
-  ═══════════════════════════════════════════ -->
+       NUEVO: subido +60px · más alto · sombra refinada
 
-  <!-- Card shadow + fondo crema -->
+       Geometría:
+         bottom offset: 400px desde el canvas bottom
+         ticket bottom y = 1920 − 400 = 1520  ← NUEVO (antes 1580)
+         ticket height: 292px                  ← NUEVO (antes 252px)
+         ticket top y  = 1520 − 292 = 1228     → usamos y=1210 para dar más aire
+         ticket center y = (1210+1520)/2 = 1365
+         notches cy = 1365
+  ══════════════════════════════════════════════════ -->
+
+  <!-- Sombra + fondo crema de la card -->
   <rect
-    x="80" y="1330" width="920" height="252" rx="30" ry="30"
+    x="80" y="1210" width="920" height="292" rx="32" ry="32"
     fill="#F7F2E8"
     filter="url(#ticketShadow)"
   />
 
   <!-- Borde sutil -->
   <rect
-    x="80" y="1330" width="920" height="252" rx="30" ry="30"
+    x="80" y="1210" width="920" height="292" rx="32" ry="32"
     fill="none"
-    stroke="rgba(26,24,19,0.07)"
-    stroke-width="1"
+    stroke="rgba(26,24,19,0.06)"
+    stroke-width="1.5"
   />
 
-  <!-- Franja azul superior (identity stripe) — clipeada a bordes del ticket -->
+  <!-- Stripe azul — 10px, clipeado a bordes redondeados del ticket -->
   <rect
-    x="80" y="1330" width="920" height="8"
+    x="80" y="1210" width="920" height="10"
     fill="#2742DD"
     clip-path="url(#ticketClip)"
   />
 
-  <!-- Fila mono superior -->
-  <text
-    x="128" y="1393"
-    class="f-mono"
-    font-size="19" font-weight="400"
-    fill="#7C786E"
-    letter-spacing="2"
-  >MATCHDAY · MEX 2026</text>
+  <!-- Fila mono: MATCHDAY / ACCESO GENERAL -->
+  <!--
+    Ticket content starts at: 1210 (top) + 10 (stripe) + 44 (pad-top) = 1264
+    Mono header baseline: 1264 + 19×0.78 ≈ 1279
+  -->
+  <text x="128" y="1280" class="f-mono" font-size="19" fill="#7C786E" letter-spacing="2.3">MATCHDAY · MEX 2026</text>
+  <text x="952" y="1280" class="f-mono" font-size="19" fill="#7C786E" text-anchor="end" letter-spacing="2.3">ACCESO GENERAL</text>
 
-  <text
-    x="952" y="1393"
-    class="f-mono"
-    font-size="19" font-weight="400"
-    fill="#7C786E"
-    letter-spacing="2"
-    text-anchor="end"
-  >ACCESO GENERAL</text>
-
-  <!-- Divisor perforado -->
+  <!-- Divisor perforado (margin-top 24 desde mono header block bottom ≈ 1285) -->
   <line
-    x1="128" y1="1417" x2="952" y2="1417"
-    stroke="#1A1813" stroke-opacity="0.15"
+    x1="128" y1="1308" x2="952" y2="1308"
+    stroke="#1A1813"
+    stroke-opacity="0.13"
     stroke-width="2"
-    stroke-dasharray="9,6"
+    stroke-dasharray="10,7"
   />
 
-  <!-- "MEX · Sede 01" — Fraunces 700 56px -->
+  <!-- MEX · Sede 01
+    Después del divider (y=1310) + margin-bottom 28 → main content top ≈ 1338
+    Serif 58px, baseline ≈ 1338 + 58×0.75 = 1338 + 43 = 1381
+  -->
   <text
-    x="128" y="1487"
+    x="128" y="1382"
     class="f-serif"
-    font-size="56" font-weight="700"
+    font-size="58" font-weight="700"
     fill="#1A1813"
     letter-spacing="-0.5"
   >MEX · Sede 01</text>
 
-  <!-- Punto "EN JUEGO" con glow -->
-  <circle cx="138" cy="1520" r="7" fill="#2742DD" filter="url(#dotGlow)"/>
+  <!-- EN JUEGO: margin-top 18 desde MEX block bottom ≈ 1338+62=1400 → starts 1418 -->
+  <circle cx="138" cy="1430" r="7" fill="#2742DD" filter="url(#dotGlow)"/>
+  <text x="156" y="1438" class="f-mono" font-size="20" fill="#2742DD" letter-spacing="2">EN JUEGO</text>
 
-  <!-- "EN JUEGO" label -->
+  <!-- 90:00 — alineado al bottom de la columna izquierda (align-items: flex-end)
+    Left column bottom ≈ 1438+5=1443. 72px font descent ≈ 13. Baseline = 1443−13 = 1430.
+    Usamos y=1438 para alineación visual con EN JUEGO.
+  -->
   <text
-    x="156" y="1527"
+    x="952" y="1440"
     class="f-mono"
-    font-size="19" font-weight="400"
-    fill="#2742DD"
-    letter-spacing="2"
-  >EN JUEGO</text>
-
-  <!-- "90:00" — tiempo en grande -->
-  <text
-    x="952" y="1525"
-    class="f-mono"
-    font-size="68" font-weight="700"
+    font-size="72" font-weight="700"
     fill="#2742DD"
     text-anchor="end"
     letter-spacing="1"
   >90:00</text>
 
-  <!-- Notches (semicírculos perforación) -->
-  <circle cx="80"  cy="1456" r="19" fill="#F0E9DB"/>
-  <circle cx="1000" cy="1456" r="19" fill="#F0E9DB"/>
+  <!-- Notches (semicírculos de perforación, r=20) -->
+  <!-- cy = centro vertical del ticket = (1210+1502)/2 = 1356 -->
+  <circle cx="80"   cy="1356" r="20" fill="#F0E9DB"/>
+  <circle cx="1000" cy="1356" r="20" fill="#F0E9DB"/>
 
 </svg>

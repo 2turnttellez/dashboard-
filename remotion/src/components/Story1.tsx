@@ -183,7 +183,7 @@ export const Story1: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: SAFE.bottom + 20,
+          bottom: SAFE.bottom + 80,
           left: SAFE.side,
           right: SAFE.side,
         }}
