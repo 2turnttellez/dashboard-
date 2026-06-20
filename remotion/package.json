@@ -1,0 +1,31 @@
+{
+  "name": "speak-esg-stories",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Speak ESG — Instagram Stories 9:16 (Mundial 2026 + sostenibilidad)",
+  "scripts": {
+    "dev": "remotion studio",
+    "studio": "remotion studio",
+    "render": "remotion render",
+    "render:story1": "remotion render Story1 out/story-1.mp4",
+    "render:story2": "remotion render Story2 out/story-2.mp4",
+    "render:story3": "remotion render Story3 out/story-3.mp4",
+    "still:story1": "remotion still Story1 out/story-1.png",
+    "still:story2": "remotion still Story2 out/story-2.png",
+    "still:story3": "remotion still Story3 out/story-3.png",
+    "upgrade": "remotion upgrade",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/google-fonts": "^4.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}
