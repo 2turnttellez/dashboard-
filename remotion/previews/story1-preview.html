@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Story 1 — Speak ESG Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9,600;9,700&family=Inter:ital,wght@0,400;0,700;0,800;1,800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0F0F0F;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 16px 32px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .meta-bar {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px 12px;
+      font-family: -apple-system, 'SF Pro Text', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: #555;
+    }
+    .meta-bar span { color: #2742DD; }
+
+    /* Scaler: collapses to visual height post-transform */
+    #scaler {
+      width: 100%;
+      position: relative;
+      /* height set by JS */
+    }
+
+    /* El frame real 1080×1920 */
+    #frame {
+      width: 1080px;
+      height: 1920px;
+      position: relative;
+      background: #F0E9DB;
+      transform-origin: top left;
+      overflow: hidden;
+      /* border-radius: 40px; — descomenta si quieres ver las esquinas redondeadas */
+    }
+
+    /* ── Tipografía del frame ── */
+    .f-serif  { font-family: 'Fraunces', Georgia, serif; font-variation-settings: 'opsz' 9, 'WONK' 1; }
+    .f-sans   { font-family: 'Inter', -apple-system, sans-serif; }
+    .f-mono   { font-family: 'Space Mono', 'Courier New', monospace; }
+  </style>
+</head>
+<body>
+
+  <div class="meta-bar">
+    <span>STORY 1 / 3</span>
+    <span style="color:#555;">SPEAK ESG · 1080×1920 · 30fps</span>
+    <span>PREVIEW</span>
+  </div>
+
+  <div id="scaler">
+    <div id="frame">
+
+      <!-- ══════════════════════════════════════════════
+           HEADER — sin barra de progreso
+           Posición: top=250 (SAFE.top), lados=80 (SAFE.side)
+      ══════════════════════════════════════════════ -->
+      <div style="
+        position: absolute;
+        top: 250px;
+        left: 80px;
+        right: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      ">
+        <!-- Lockup logo Speak ESG Podcast -->
+        <div class="f-sans" style="display: flex; align-items: center; gap: 12px;">
+          <span style="
+            font-size: 34px;
+            font-weight: 800;
+            font-style: italic;
+            letter-spacing: -0.01em;
+            color: #2F4EE8;
+            line-height: 1;
+          ">SPEAK</span>
+          <span style="
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: #FFFFFF;
+            background-color: #E8842A;
+            padding: 4px 10px;
+            border-radius: 10px;
+            line-height: 1;
+          ">PODCAST</span>
+          <span style="
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            color: #2F4EE8;
+            line-height: 1;
+          ">ESG</span>
+        </div>
+
+        <!-- MUNDIAL 2026 -->
+        <span class="f-mono" style="
+          font-size: 22px;
+          letter-spacing: 0.22em;
+          color: #7C786E;
+          font-weight: 400;
+        ">MUNDIAL 2026</span>
+      </div>
+
+
+      <!-- ══════════════════════════════════════════════
+           ZONA DE TEXTO EDITORIAL
+           Posición: top=340 (SAFE.top + 90), lados=80
+      ══════════════════════════════════════════════ -->
+      <div style="
+        position: absolute;
+        top: 340px;
+        left: 80px;
+        right: 80px;
+      ">
+
+        <!-- Eyebrow / label -->
+        <div class="f-mono" style="
+          font-size: 24px;
+          letter-spacing: 0.22em;
+          color: #2742DD;
+          font-weight: 400;
+          margin-bottom: 32px;
+        ">DÍA DE PARTIDO</div>
+
+        <!-- Título línea 1: "Hoy hay" -->
+        <div class="f-serif" style="
+          font-size: 152px;
+          font-weight: 700;
+          color: #1A1813;
+          line-height: 0.9;
+          letter-spacing: -0.03em;
+        ">Hoy hay</div>
+
+        <!-- Título línea 2: "fútbol." — punto en azul -->
+        <div class="f-serif" style="
+          font-size: 152px;
+          font-weight: 700;
+          color: #1A1813;
+          line-height: 0.95;
+          letter-spacing: -0.03em;
+          display: flex;
+          align-items: baseline;
+        ">
+          <span>fútbol</span><span style="color: #2742DD;">.</span>
+        </div>
+
+        <!-- Subtítulo -->
+        <div class="f-sans" style="
+          margin-top: 52px;
+          font-size: 38px;
+          color: #3A372F;
+          line-height: 1.45;
+          font-weight: 400;
+        ">
+          Pero también hay&nbsp;<strong style="font-weight: 700;">algo más en juego.</strong>
+        </div>
+
+      </div>
+
+
+      <!-- ══════════════════════════════════════════════
+           TICKET — Apple Wallet / pase digital
+           Posición: bottom=340 (SAFE.bottom+20), lados=80
+      ══════════════════════════════════════════════ -->
+      <div style="
+        position: absolute;
+        bottom: 340px;
+        left: 80px;
+        right: 80px;
+      ">
+        <div style="
+          position: relative;
+          border-radius: 30px;
+          background-color: #F7F2E8;
+          box-shadow:
+            0 24px 60px rgba(26,24,19,0.18),
+            0 2px 0 rgba(255,255,255,0.65) inset;
+          border: 1px solid rgba(26,24,19,0.07);
+          overflow: hidden;
+        ">
+
+          <!-- Franja de color superior (identity strip) -->
+          <div style="height: 8px; background-color: #2742DD; width: 100%;"></div>
+
+          <!-- Contenido del ticket -->
+          <div style="padding: 34px 48px 40px;">
+
+            <!-- Fila mono superior -->
+            <div class="f-mono" style="
+              display: flex;
+              justify-content: space-between;
+              font-size: 19px;
+              letter-spacing: 0.12em;
+              color: #7C786E;
+            ">
+              <span>MATCHDAY · MEX 2026</span>
+              <span>ACCESO GENERAL</span>
+            </div>
+
+            <!-- Divisor perforado -->
+            <div style="
+              margin-top: 22px;
+              margin-bottom: 26px;
+              border-top: 2px dashed rgba(26,24,19,0.16);
+            "></div>
+
+            <!-- Fila principal -->
+            <div style="
+              display: flex;
+              align-items: flex-end;
+              justify-content: space-between;
+            ">
+              <!-- Lado izquierdo: sede + estado -->
+              <div>
+                <div class="f-serif" style="
+                  font-size: 56px;
+                  font-weight: 700;
+                  color: #1A1813;
+                  line-height: 1.0;
+                  letter-spacing: -0.01em;
+                ">MEX · Sede 01</div>
+
+                <div class="f-mono" style="
+                  margin-top: 16px;
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  font-size: 19px;
+                  letter-spacing: 0.1em;
+                  color: #2742DD;
+                ">
+                  <span style="
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background-color: #2742DD;
+                    box-shadow: 0 0 10px #2742DD;
+                    flex-shrink: 0;
+                  "></span>
+                  EN JUEGO
+                </div>
+              </div>
+
+              <!-- Lado derecho: tiempo -->
+              <div class="f-mono" style="
+                font-size: 68px;
+                font-weight: 700;
+                color: #2742DD;
+                letter-spacing: 0.02em;
+                line-height: 1;
+              ">90:00</div>
+
+            </div>
+          </div><!-- fin padding -->
+
+          <!-- Notch izquierdo (semi-círculo perforación) -->
+          <div style="
+            position: absolute;
+            top: 50%;
+            left: -18px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #F0E9DB;
+            transform: translateY(-50%);
+          "></div>
+
+          <!-- Notch derecho -->
+          <div style="
+            position: absolute;
+            top: 50%;
+            right: -18px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #F0E9DB;
+            transform: translateY(-50%);
+          "></div>
+
+        </div><!-- fin ticket card -->
+      </div><!-- fin ticket wrapper -->
+
+    </div><!-- fin #frame -->
+  </div><!-- fin #scaler -->
+
+
+  <script>
+    // Escala el frame 1080×1920 para que quepa en el ancho del viewport.
+    function scaleFrame() {
+      var padding = 32;
+      var scale = (window.innerWidth - padding) / 1080;
+      var frame = document.getElementById('frame');
+      var scaler = document.getElementById('scaler');
+      frame.style.transform = 'scale(' + scale + ')';
+      // Como transform no afecta el flujo, ajustamos la altura del contenedor.
+      scaler.style.height = Math.ceil(1920 * scale) + 'px';
+    }
+    scaleFrame();
+    window.addEventListener('resize', scaleFrame);
+  </script>
+
+</body>
+</html>
