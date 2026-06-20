@@ -1,6 +1,7 @@
 import React from "react";
 import { Composition } from "remotion";
 import { VIDEO, FPS, DURATION } from "./lib/theme";
+import "./lib/fonts"; // inicializa carga de Google Fonts en el bundle
 import { Story1 } from "./components/Story1";
 import { Story2 } from "./components/Story2";
 import { Story3 } from "./components/Story3";
