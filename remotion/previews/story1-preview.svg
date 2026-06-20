@@ -47,34 +47,18 @@
        top: 250px (SAFE.top), lados: 80px
   ═══════════════════════════════════════════ -->
 
-  <!-- "SPEAK" — Inter italic 800 azul -->
-  <text
-    x="80" y="284"
-    class="f-sans"
-    font-size="34" font-weight="800" font-style="italic"
-    fill="#2F4EE8"
-    letter-spacing="-0.3"
-  >SPEAK</text>
-
-  <!-- Pill "PODCAST" naranja -->
-  <rect x="208" y="258" width="90" height="27" rx="12" ry="12" fill="#E8842A"/>
-  <text
-    x="253" y="278"
-    class="f-sans"
-    font-size="13" font-weight="700"
-    fill="#FFFFFF"
-    text-anchor="middle"
-    letter-spacing="0.9"
-  >PODCAST</text>
-
-  <!-- "ESG" — Inter 800 azul -->
-  <text
-    x="310" y="284"
-    class="f-sans"
-    font-size="34" font-weight="800"
-    fill="#2F4EE8"
-    letter-spacing="-0.3"
-  >ESG</text>
+  <!--
+    LOGO: se usa el archivo original. El PNG tiene fondo blanco/gris (no transparente).
+    mix-blend-mode="multiply" integra el fondo blanco con el crema como workaround.
+    Para render final se necesita PNG con canal alpha (fondo transparente).
+    Ruta relativa desde este SVG: ../src/assets/logo-speak-esg.png
+  -->
+  <image
+    href="../src/assets/logo-speak-esg.png"
+    x="58" y="230"
+    height="110"
+    style="mix-blend-mode: multiply;"
+  />
 
   <!-- "MUNDIAL 2026" — Space Mono gris cálido -->
   <text

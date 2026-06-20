@@ -23,7 +23,7 @@ export const Header: React.FC<{ enter?: number }> = ({ enter = 1 }) => {
         transform: `translateY(${translateY}px)`,
       }}
     >
-      <SpeakLogo variant="lockup" height={34} />
+      <SpeakLogo height={90} blendMode="multiply" />
       <span
         style={{
           fontFamily: FONTS.mono,
